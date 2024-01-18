@@ -1,7 +1,9 @@
-## Remembering how to add a submodule
+The NVS class is just a collection of functions which act as a mid-level abstraction between object and the calls to the IDF.
 
-Submodules are particularly interesting for containing our components.   When components are modules, they are held in their own separate repository and can be used in multiple projects.   Any update in one project is shared from that submodule to all projects.  THE ASSUMPTION is being made that you own and control those submodule projects.  
+Read the abstractions here: [NVS abstraction](./docs/nvs_abstractions.md)
 
-1) Make sure the main project is already in Git under control. (the project we are adding a submodule to)
-2) Explore the target directory (eg. components directory) and right mouse click "Git Bash here" to start a terminal.
-3) Apply command $ git submodule add  https: // github.com / (account name) / (repository name).git
+There are no block diagrams, because NVS is just a collection of functions and very little data.
+
+There are no squences because NVS has no task and runs no sequential processing.
+
+We also have no state models, because NVS does not hold any states internally.  NVS has no controllable lifecycle within the project. 
