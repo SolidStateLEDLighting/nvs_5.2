@@ -1,6 +1,6 @@
 The NVS class is just a collection of functions which act as a mid-level abstraction between object and the calls to the IDF.
 
-Read the abstractions here: [NVS abstraction](./docs/nvs_abstractions.md)
+Read the abstractions here: [NVS abstraction](./src/nvs/docs/nvs_abstractions.md)
 
 There are no block diagrams, because NVS is just a collection of functions and very little data.
 
