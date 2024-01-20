@@ -22,19 +22,7 @@ NVS::NVS()
     setLogLevels();            // Manually sets log levels for tasks down the call stack for development.
     createSemaphores();        // Creates any locking semaphores owned by this object.
     restoreVariablesFromNVS(); // Brings back all our persistant data.
-
-    xSemaphoreTake(semNVSEntry, portMAX_DELAY); // Don't allow entry until after the constructor is finished.
-
-    esp_err_t ret = nvs_flash_init();
-
-    if ((ret == ESP_ERR_NVS_NO_FREE_PAGES) || (ret == ESP_ERR_NOT_FOUND) || (ret == ESP_ERR_NVS_NEW_VERSION_FOUND))
-    {
-        routeLogByValue(LOG_TYPE::WARN, std::string(__func__) + "(): ********** Erasing NVS for use. **********");
-        ESP_ERROR_CHECK(nvs_flash_erase()); // NVS partition was truncated and needs to be erased
-        ESP_ERROR_CHECK(nvs_flash_init());  // Retry nvs_flash_init
-    }
-
-    xSemaphoreGive(semNVSEntry);
+    initializeNVS();           // We don't have a run task, we all our initialization is done here.
 }
 
 void NVS::setShowFlags()
@@ -62,6 +50,23 @@ void NVS::createSemaphores()
 
 void NVS::restoreVariablesFromNVS()
 {
+    // NVS doens't maintain any variables at this time.
+}
+
+void NVS::initializeNVS()
+{
+    xSemaphoreTake(semNVSEntry, portMAX_DELAY); // Don't allow entry until after our initialization is finished.
+
+    esp_err_t ret = nvs_flash_init();
+
+    if ((ret == ESP_ERR_NVS_NO_FREE_PAGES) || (ret == ESP_ERR_NOT_FOUND) || (ret == ESP_ERR_NVS_NEW_VERSION_FOUND))
+    {
+        routeLogByValue(LOG_TYPE::WARN, std::string(__func__) + "(): ********** Erasing NVS for use. **********");
+        ESP_ERROR_CHECK(nvs_flash_erase()); // NVS partition was truncated and needs to be erased
+        ESP_ERROR_CHECK(nvs_flash_init());  // Retry nvs_flash_init
+    }
+
+    xSemaphoreGive(semNVSEntry);
 }
 
 void NVS::eraseNVSPartition(const char str[])

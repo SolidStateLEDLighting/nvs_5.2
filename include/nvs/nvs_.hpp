@@ -72,6 +72,7 @@ extern "C"
         void setLogLevels(void);
         void createSemaphores(void);
         void restoreVariablesFromNVS(void);
+        void initializeNVS(void);
 
         nvs_handle_t nvsHandle = 0;
 
