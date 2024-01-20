@@ -69,6 +69,9 @@ extern "C"
 
         uint8_t show = 0;
         void setShowFlags(void);
+        void setLogLevels(void);
+        void createSemaphores(void);
+        void restoreVariablesFromNVS(void);
 
         nvs_handle_t nvsHandle = 0;
 

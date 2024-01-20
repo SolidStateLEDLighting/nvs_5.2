@@ -18,12 +18,12 @@ SemaphoreHandle_t semNVSEntry = NULL; // Varible lives in this translation unit.
 
 NVS::NVS()
 {
-    vSemaphoreCreateBinary(semNVSEntry);
+    setShowFlags();            // Static enabling of logging statements for any area of concern during development.
+    setLogLevels();            // Manually sets log levels for tasks down the call stack for development.
+    createSemaphores();        // Creates any locking semaphores owned by this object.
+    restoreVariablesFromNVS(); // Brings back all our persistant data.
 
-    if (semNVSEntry != NULL)
-        xSemaphoreTake(semNVSEntry, portMAX_DELAY); // Don't allow entry until after the constructor is finished.
-
-    setShowFlags();
+    xSemaphoreTake(semNVSEntry, portMAX_DELAY); // Don't allow entry until after the constructor is finished.
 
     esp_err_t ret = nvs_flash_init();
 
@@ -43,6 +43,25 @@ void NVS::setShowFlags()
     // show |= _showNVS;
     // show |= _showRun;
     // show |= _showJSONProcessing;
+}
+
+void NVS::setLogLevels()
+{
+    if (show > 0)                             // Normally, we are interested in the variables inside our object.
+        esp_log_level_set(TAG, ESP_LOG_INFO); // If we have any flags set, we need to be sure to turn on the logging so we can see them.
+    else
+        esp_log_level_set(TAG, ESP_LOG_ERROR); // Likewise, we turn off logging if we are not looking for anything.
+}
+
+void NVS::createSemaphores()
+{
+    semNVSEntry = xSemaphoreCreateBinary(); // External Entry locking
+    if (semNVSEntry != NULL)
+        xSemaphoreGive(semNVSEntry);
+}
+
+void NVS::restoreVariablesFromNVS()
+{
 }
 
 void NVS::eraseNVSPartition(const char str[])
