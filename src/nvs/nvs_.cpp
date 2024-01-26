@@ -27,6 +27,7 @@ NVS::NVS()
 
 void NVS::setShowFlags()
 {
+    // show variable is system wide defined and this exposes for viewing any general processes.
     show = 0;
     // show |= _showNVS;
     // show |= _showRun;
