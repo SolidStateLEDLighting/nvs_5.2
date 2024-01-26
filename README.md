@@ -1,5 +1,5 @@
 # NVS 5.2 Overview
----
+
 ## Primary Objective
 
 The NVS class is just a collection of functions which act as a mid-level abstraction between object and the calls to the IDF.
