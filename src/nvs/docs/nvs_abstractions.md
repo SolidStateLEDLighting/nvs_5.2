@@ -1,6 +1,4 @@
 # NVS Abstractions
->
----
 
 ## NVS Class:
 The system class in itself is a mid-level class in our project.  The intent of the NVS class is to save all other objects from code duplication.  
