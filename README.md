@@ -9,6 +9,6 @@ There are no squences because NVS has no tasks, no run loops, or no sequential p
 We also have no state models, because NVS does not hold any states internally.  NVS has no controllable lifecycle within the project.
 
 The following categories will help you visualize different aspects of NVS:  
-1) [NVS Abstractions](./docs/nvs_abstractions.md)   
-2) [NVS Flowcharts](./docs/nvs_flowcharts.md)  
+1) [NVS Abstractions](./src/nvs/docs/nvs_abstractions.md)   
+2) [NVS Flowcharts](./src/nvs/docs/nvs_flowcharts.md)  
 ___  

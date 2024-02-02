@@ -2,14 +2,13 @@
 ___
 ## NVS Class:
 The system class in itself is a mid-level class in our project.  The intent of the NVS class is to save all other objects from code duplication.  
-
----
+___  
 # Top-Level
 When in operation, this class becomes an extension of other classes.  So, the top-level abstraction is held in the calling class.
 
 save / restore functions
 
----
+___  
 # Mid-Level
 * Opens and closes nvs storage.
 * Responsible for erasing partitions and namespaces.
@@ -18,8 +17,9 @@ save / restore functions
 
 write / Read functions
 
----
+___  
 # Low-Level
 The system will make calls directly back to the ESP-IDF.  There are no other intermediary actors between NVS and the IDF.
 
 set / get functions
+___  
