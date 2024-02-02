@@ -1,4 +1,4 @@
-# NVS 5.2 Overview
+# NVS 5.2 Component
 
 The NVS class is just a collection of functions which act as a mid-level abstraction between our objects and low level calls to the IDF.
 
