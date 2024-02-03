@@ -9,10 +9,10 @@ It abstracts away the lower level ESP-IDF functions into a more generalized call
 3) All write function calls 'get' before a 'set'.  If those values already equal, another 'set' is does not occur.
 
 This is the Read pattern for boolean values.  Default value is passed in by reference and any retrieved value is passed back by reference.
-![Boolean Read Diagram](./drawings/sntp_flowcharts_boolean_read_pattern.svg)
+![Boolean Read Diagram](./drawings/sntp_flowcharts_boolean_read.svg)
 ___  
 This is the Write pattern for boolean values.  Value is passed in by reference.
-![Boolean Write Diagram](./drawings/sntp_flowcharts_boolean_write_pattern.svg)
+![Boolean Write Diagram](./drawings/sntp_flowcharts_boolean_write.svg)
 ___  
 This is the Read pattern for integers.  Default value is passed in by reference and any retrieved value is passed back by reference.
 ![Integer Write Diagram](./drawings/sntp_flowcharts_integer_read_pattern.svg)

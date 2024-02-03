@@ -162,6 +162,29 @@ esp_err_t NVS::writeBooleanToNVS(const char *key, bool newValue)
     if (show & _showNVS)
         routeLogByValue(LOG_TYPE::INFO, std::string(__func__) + "(): Passed in key " + std::string(key) + " with value of: " + std::to_string(newValue));
 
+    uint8_t storedValue = 0;
+
+    // We try to do a read first.  If entry in NVS doesn't exist, the read will create the entry for us with a starting value of newValue.
+    // If the entry already exists, we get back its current value.  If new value is different, we save it.  We don't try to resave
+    // a value that is unchanged.
+    esp_err_t ret = readU8IntegerFromNVS(key, &storedValue);
+
+    if (ret == ESP_OK)
+    {
+        if (newValue != storedValue) // If the value has changed or empty, then update with new value
+        {
+            if (show & _showNVS)
+                routeLogByValue(LOG_TYPE::INFO, std::string(__func__) + "(): writeU8IntegerToNVS is key " + std::string(key) + " with value of: " + std::to_string(newValue));
+
+            ret = nvs_set_u8(nvsHandle, key, (uint8_t)newValue); // Casts the boolean to an integer
+        }
+    }
+    else
+    {
+        if (show & _showNVS) // Unexpected Error
+            routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): writeU8IntegerToNVS failed esp_err_t code = " + esp_err_to_name(ret));
+    }
+
     if (show & _showNVS)
     {
         std::string trueFalse = "";
@@ -174,7 +197,7 @@ esp_err_t NVS::writeBooleanToNVS(const char *key, bool newValue)
         routeLogByValue(LOG_TYPE::INFO, std::string(__func__) + "(): saveBooleanAsString key " + std::string(key) + " with value of: " + std::to_string(newValue));
     }
 
-    return nvs_set_u8(nvsHandle, key, (uint8_t)newValue);
+    return ret;
 }
 
 esp_err_t NVS::readStringFromNVS(const char *key, std::string *strValue)
@@ -302,7 +325,7 @@ esp_err_t NVS::writeU8IntegerToNVS(const char *key, uint8_t newValue)
 
     // We try to do a read first.  If entry in NVS doesn't exist, the read will create the entry for us with a starting value of newValue.
     // If the entry already exists, we get back its current value.  If new value is different, we save it.  We don't try to resave
-    // a value that is unchanged
+    // a value that is unchanged.
     esp_err_t ret = readU8IntegerFromNVS(key, &storedValue);
 
     if (ret == ESP_OK)
