@@ -16,6 +16,8 @@ SemaphoreHandle_t semNVSEntry = NULL; // Varible lives in this translation unit.
 // Also like the System, this NVS object is a singleton object and remains instantiated for the lifetime of the application - UNLESS, the system shuts down and
 // puts the system to sleep.  In the case of a shut-down, nvs is destroyed.
 //
+// NVS Error codes can be found in nvs.h
+//
 
 NVS::NVS()
 {
@@ -116,7 +118,7 @@ esp_err_t NVS::readBooleanFromNVS(const char *key, bool *value)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return ESP_ERR_NOT_ALLOWED;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -127,14 +129,16 @@ esp_err_t NVS::readBooleanFromNVS(const char *key, bool *value)
 
     ret = nvs_get_u8(nvsHandle, key, &intValue);
 
-    if ((ret == ESP_OK) && (intValue > 1))
-    {
-        routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): Improper value of " + std::to_string(intValue) + "stored");
-        return ESP_FAIL;
-    }
-
     if (ret == ESP_OK)
+    {
+        if (intValue > 1)
+        {
+            routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): Improper value of " + std::to_string(intValue) + "stored");
+            return ESP_FAIL;
+        }
+
         *value = (bool)intValue; // values of 0 and 1 should convert correctly to bool.
+    }
     else if (ret == ESP_ERR_NVS_NOT_FOUND)
     {
         // If the call to nvs_get_u8 fails, the default value passed in by reference is unchanged.  We use that value for a first time save.
@@ -152,7 +156,7 @@ esp_err_t NVS::writeBooleanToNVS(const char *key, bool newValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -178,7 +182,7 @@ esp_err_t NVS::readStringFromNVS(const char *key, std::string *strValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -223,7 +227,7 @@ esp_err_t NVS::writeStringToNVS(const char *key, std::string *newValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -264,7 +268,7 @@ esp_err_t NVS::readU8IntegerFromNVS(const char *key, uint8_t *intValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -288,7 +292,7 @@ esp_err_t NVS::writeU8IntegerToNVS(const char *key, uint8_t newValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -301,7 +305,7 @@ esp_err_t NVS::writeU8IntegerToNVS(const char *key, uint8_t newValue)
     // a value that is unchanged
     esp_err_t ret = readU8IntegerFromNVS(key, &storedValue);
 
-    if ((ret == ESP_OK) || (ret == ESP_ERR_NVS_NOT_FOUND))
+    if (ret == ESP_OK)
     {
         if (newValue != storedValue) // If the value has changed or empty, then update with new value
         {
@@ -311,8 +315,7 @@ esp_err_t NVS::writeU8IntegerToNVS(const char *key, uint8_t newValue)
             ret = nvs_set_u8(nvsHandle, key, newValue);
         }
     }
-
-    if (ret != ESP_OK)
+    else
     {
         if (show & _showNVS) // Unexpected Error
             routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): writeU8IntegerToNVS failed esp_err_t code = " + esp_err_to_name(ret));
@@ -325,7 +328,7 @@ esp_err_t NVS::readI32IntegerFromNVS(const char *key, int32_t *intValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -349,7 +352,7 @@ esp_err_t NVS::writeI32IntegerToNVS(const char *key, int32_t newValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -385,7 +388,7 @@ esp_err_t NVS::readU32IntegerFromNVS(const char *key, uint32_t *intValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)
@@ -409,7 +412,7 @@ esp_err_t NVS::writeU32IntegerToNVS(const char *key, uint32_t newValue)
     if (nvsHandle == 0)
     {
         routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return false;
+        return ESP_ERR_NVS_INVALID_HANDLE;
     }
 
     if (show & _showNVS)

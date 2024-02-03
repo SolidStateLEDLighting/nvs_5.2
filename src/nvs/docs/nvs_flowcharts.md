@@ -10,22 +10,21 @@ It abstracts away the lower level Esp IDF functions into a more generalized call
 
 **NOTE:** A read always occurs at the start of all objects and it is at this point that any new variables are written into nvs with their default values:
 
-This is the Read pattern for boolean values.
+This is the Read pattern for boolean values.  Default is passed in by reference and the retrieved value is passed back reference.
 ![Boolean Write Diagram](./drawings/sntp_flowcharts_boolean_read_pattern.svg)
 ___  
-This is the Write pattern for boolean values.
+This is the Write pattern for boolean values.  Value is passed in by reference.
 ![Boolean Write Diagram](./drawings/sntp_flowcharts_boolean_write_pattern.svg)
 ___  
-
-This is the Read pattern for integers.
+This is the Read pattern for integers.  Default is passed in by reference and the retrieved value is passed back reference.
 ![Integer Write Diagram](./drawings/sntp_flowcharts_integer_read_pattern.svg)
 ___  
-This is the Write pattern for integers.
+This is the Write pattern for integers.  Value is passed in by reference.
 ![Integer Write Diagram](./drawings/sntp_flowcharts_integer_write_pattern.svg)
 ___  
-This is the Read pattern for strings.
+This is the Read pattern for strings.  Default is passed in by reference and the retrieved value is passed back reference.
 ![String Write Diagram](./drawings/sntp_flowcharts_string_read_pattern.svg)
 ___  
-This is the Write pattern for string.
+This is the Write pattern for string.  Value is passed in by reference.
 ![String Write Diagram](./drawings/sntp_flowcharts_string_write_pattern.svg)
 ___ 
