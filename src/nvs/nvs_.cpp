@@ -30,8 +30,12 @@ void NVS::setShowFlags()
     // show variable is system wide defined and this exposes for viewing any general processes.
     show = 0;
     // show |= _showNVS;
-    // show |= _showRun;
+    // show |= _showRun; // We don't use any of these flags below _showNVS
+    // show |= _showEvents;
     // show |= _showJSONProcessing;
+    // show |= _showDebugging;
+    // show |= _showProcess;
+    // show |= _showPayload;
 }
 
 void NVS::setLogLevels()
@@ -70,6 +74,7 @@ void NVS::initializeNVS()
     xSemaphoreGive(semNVSEntry);
 }
 
+/* Public Member Functions */
 void NVS::eraseNVSPartition(const char str[])
 {
     ESP_ERROR_CHECK(nvs_flash_erase_partition(str));
