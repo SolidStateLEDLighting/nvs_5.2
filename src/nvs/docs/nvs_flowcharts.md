@@ -1,5 +1,4 @@
 # NVS Flowcharts
-___
 This NVS object is a mid-level handler for storage.  This object is an extension for any other object that calls to it.
 
 It abstracts away the lower level ESP-IDF functions into a more generalized call.  We have several purposes encapsulated in these functions:
