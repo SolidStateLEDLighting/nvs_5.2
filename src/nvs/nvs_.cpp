@@ -387,7 +387,7 @@ esp_err_t NVS::writeI32IntegerToNVS(const char *key, int32_t newValue)
     // If the entry already exists, we get back its current value.  If new value is different, we save it.  We don't try to resave a value that is unchanged
     esp_err_t ret = readI32IntegerFromNVS(key, &storedValue);
 
-    if ((ret == ESP_OK) || (ret == ESP_ERR_NVS_NOT_FOUND))
+    if (ret == ESP_OK)
     {
         if (newValue != storedValue) // If the value has changed or empty, then update with new value
         {
@@ -447,7 +447,7 @@ esp_err_t NVS::writeU32IntegerToNVS(const char *key, uint32_t newValue)
     // If the entry already exists, we get back its current value.  If new value is different, we save it.  We don't try to resave a value that is unchanged
     esp_err_t ret = readU32IntegerFromNVS(key, &storedValue);
 
-    if ((ret == ESP_OK) || (ret == ESP_ERR_NVS_NOT_FOUND))
+    if (ret == ESP_OK)
     {
         if (newValue != storedValue) // If the value has changed, then update with new value
         {
@@ -457,8 +457,7 @@ esp_err_t NVS::writeU32IntegerToNVS(const char *key, uint32_t newValue)
             ret = nvs_set_u32(nvsHandle, key, newValue);
         }
     }
-
-    if (ret != ESP_OK)
+    else
     {
         if (show & _showNVS) // Unexpected Error
             routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): writeU32IntegerToNVS failed esp_err_t code = " + esp_err_to_name(ret));
