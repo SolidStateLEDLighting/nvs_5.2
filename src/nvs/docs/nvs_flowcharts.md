@@ -1,7 +1,7 @@
 # NVS Flowcharts
 ___
 This NVS object is a mid-level handler for storage.  This object is an extension for any other object that calls to it.
-[Abstraction](./drawings/nvs_abstractions.svg)
+
 It abstracts away the lower level ESP-IDF functions into a more generalized call.  We have several purposes encapsulated in these functions:
 
 1) If NVS storage does not exist in FLASH, this object will establish it.

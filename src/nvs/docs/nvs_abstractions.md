@@ -1,6 +1,8 @@
 # NVS Abstractions
 ___
-The system class in itself is a mid-level class in our project.  The intent of the NVS class is to save all other objects from code duplication.  
+The system class in itself is a mid-level class in our project.  The intent of the NVS class is to save all other objects from code duplication.
+
+![Abstraction](./drawings/nvs_abstractions.svg)
 ___  
 ## Top-Level
 When in operation, this class becomes an extension of other classes.  So, the top-level abstraction is held in the calling class.  The top level classes call **save / restore functions**.
