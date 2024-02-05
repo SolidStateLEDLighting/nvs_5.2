@@ -1,6 +1,6 @@
 # NVS 5.2 Component
 
-This components has been test with: 
+This components has been tested with: 
 * **ESP-IDF-Advanced-Template-Alpha-5.2**
 
 The NVS class is just a collection of functions which act as a mid-level abstraction between our objects and low level calls to the IDF.
