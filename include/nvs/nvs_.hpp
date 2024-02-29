@@ -58,11 +58,11 @@ extern "C"
         void printNVS(void);
 
     private:
-        char TAG[5] = "_nvs";
-
         NVS(void);
         NVS(const NVS &) = delete;            // Disable copy constructor
         void operator=(NVS const &) = delete; // Disable assignment operator
+
+        char TAG[5] = "_nvs";
 
         /* Object References */
         System *sys = nullptr;
