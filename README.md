@@ -1,7 +1,5 @@
-# NVS 5.2 Component
-
+# NVS 5.2 Component  
 This components has been tested with: **ESP-IDF-Advanced-Template-Alpha-5.2**  
-
 **Expected changes to arrive:**  
 None at this time.
 
