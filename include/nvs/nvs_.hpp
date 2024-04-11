@@ -68,7 +68,7 @@ extern "C"
         System *sys = nullptr;
 
         uint8_t show = 0;
-        void setShowFlags(void);
+        void setFlags(void);
         void setLogLevels(void);
         void createSemaphores(void);
         void restoreVariablesFromNVS(void);

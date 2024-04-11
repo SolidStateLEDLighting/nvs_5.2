@@ -21,14 +21,14 @@ SemaphoreHandle_t semNVSEntry = NULL; // Varible lives in this translation unit.
 
 NVS::NVS()
 {
-    setShowFlags();            // Static enabling of logging statements for any area of concern during development.
+    setFlags();            // Static enabling of logging statements for any area of concern during development.
     setLogLevels();            // Manually sets log levels for tasks down the call stack for development.
     createSemaphores();        // Creates any locking semaphores owned by this object.
     restoreVariablesFromNVS(); // Brings back all our persistant data.
     initializeNVS();           // We don't have a run task, we all our initialization is done here.
 }
 
-void NVS::setShowFlags()
+void NVS::setFlags()
 {
     // show variable is system wide defined and this exposes for viewing any general processes.
     show = 0;
@@ -63,7 +63,7 @@ void NVS::restoreVariablesFromNVS()
 
 void NVS::initializeNVS()
 {
-    xSemaphoreTake(semNVSEntry, portMAX_DELAY); // Don't allow entry until after our initialization is finished.
+    xSemaphoreTake(semNVSEntry, portMAX_DELAY);
 
     esp_err_t ret = nvs_flash_init();
 
