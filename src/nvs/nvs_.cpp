@@ -19,6 +19,7 @@ SemaphoreHandle_t semNVSEntry = NULL; // Varible lives in this translation unit.
 // NVS Error codes can be found in nvs.h
 //
 
+/* Construction / Destruction */
 NVS::NVS()
 {
     setFlags();            // Static enabling of logging statements for any area of concern during development.
