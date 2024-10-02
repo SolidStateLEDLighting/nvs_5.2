@@ -31,7 +31,7 @@ extern "C"
         void eraseNVSNamespace(char str[]);
 
         esp_err_t openNVSStorage(const char *);
-        esp_err_t closeNVStorage(void);
+        void closeNVStorage(bool = true);
 
         esp_err_t readBooleanFromNVS(const char *, bool *);
         esp_err_t writeBooleanToNVS(const char *, bool);

@@ -99,19 +99,18 @@ esp_err_t NVS::openNVSStorage(const char *name_space)
     return ESP_OK;
 }
 
-esp_err_t NVS::closeNVStorage()
+void NVS::closeNVStorage(bool commitChanges)
 {
     if (nvsHandle == 0)
     {
-        routeLogByValue(LOG_TYPE::ERROR, std::string(__func__) + "(): You must openNVSStorage() first!");
-        return ESP_FAIL;
+        routeLogByValue(LOG_TYPE::INFO, std::string(__func__) + "(): You must openNVSStorage() first!");
+        return;
     }
 
-    // On some reads, we save a default value where no value previously exists -- so all our reads and writes need to be committed.
-    ESP_RETURN_ON_ERROR(nvs_commit(nvsHandle), TAG, "nvs_commit() failed...");
+    if (commitChanges)
+        ESP_ERROR_CHECK(nvs_commit(nvsHandle));
+
     nvs_close(nvsHandle);
-    nvsHandle = 0;
-    return ESP_OK;
 }
 
 esp_err_t NVS::readBooleanFromNVS(const char *key, bool *value)
