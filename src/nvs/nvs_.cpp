@@ -89,7 +89,7 @@ void NVS::eraseNVSNamespace(char str[])
 {
     ESP_ERROR_CHECK(openNVSStorage(str));
     ESP_ERROR_CHECK(nvs_erase_all(nvsHandle));
-    ESP_ERROR_CHECK(closeNVStorage());
+    closeNVStorage();
     routeLogByValue(LOG_TYPE::INFO, std::string(__func__) + "(): NVS Erased namespace " + std::string(str));
 }
 
